@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<title></title>
+<style type="text/css">/*<![CDATA[*/
+
+div {background:#ffffcc; padding:20px;}
+div div {background:#ffccff;}
+div div div {background:#ccffff;}
+
+/**/</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.x-git.js"></script>
+<script type="text/javascript">//<![CDATA[
+
+$(function () {
+
+	var a = $('#a'),
+		b = $('#b'),
+		c = $('#c'),
+		d = $('#d');
+
+	
+	a.on('click', function (e) {
+		console.log('a');
+		/*
+			1. 'a' 만 출력
+		*/
+	});
+
+	b.on('click', function (e) {
+		console.log('b');
+		/*
+			b는 a안에 있다. 그래서 b를 클릭하면 a도 클릭되는 셈이다.
+			이처럼 자식 노드에서 생긴 이벤트가 부모로 전달되는 과정을 버블링(bubbling)이라고 한다.
+
+			1. 'b' 출력 후
+			2. 'a' 출력
+		*/
+	});
+
+	c.on('click', function (e) {
+		// stopPropagation는 부모로 이벤트가 전파되는 것을 막는 것
+		e.stopPropagation();
+
+		console.log('c');
+		/*
+			버블링에 의해 c, b, a 순으로 출력되는 것이 정상이다.
+			그러나 이를 부모로 전달하지 않는 것이 stopPropagation이다.
+
+			1. stopPropagation 없을 경우 부모로 이벤트를 전달하여 c, b, a 순으로 출력된다.
+			2. stopPropagation 있을 경우 부모로 이벤트를 전달하지 않기 때문에 c만 출력된다.
+		*/
+	});
+
+	d.on('click', function (e) {
+		e.preventDefault(); // id="d" 클릭 시 일어나는 기본 이벤트 실행 방지
+		alert('d 클릭');
+
+		/*
+			a 태그 click 시 default는 내부링크(#) 혹은 외부링크(url)로의 이동이다.
+			e.preventDefault(); 는 위와 같은 default로 정의된 액션이 일어나지 않도록 강제하는 것이다.
+		*/
+	});
+
+});
+
+//</script>
+</head>
+<body>
+
+<div id="a">A
+	<div id="b">B
+		<div id="c">C</div>
+	</div>
+</div>
+
+<a href="http://take0415.blog.me" id="d">링크</a>
+
+</body>
+</html>
