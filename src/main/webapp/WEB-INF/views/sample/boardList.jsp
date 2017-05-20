@@ -24,7 +24,7 @@
         <tbody>
             <c:choose>
                 <c:when test="${fn:length(list) > 0}">
-                    <c:forEach items="${list }" var="row">
+                    <c:forEach items="${list }" var="row" varStatus="status">
                         <tr>
                             <td>${row.IDX }</td>
                             <td class="title">
@@ -44,6 +44,13 @@
             </c:choose>
         </tbody>
     </table>
+    <!-- paginationInfo : 페이징 태그를 만들기 위해서 필요한 정보들을 의미.
+    	jsFunction : 페이징 태그를 클릭했을 때 수행할 함수 의미 -->
+	<c:if test="${not empty paginationInfo}">
+		<ui:pagination paginationInfo = "${paginationInfo}" type="text" jsFunction="fn_search"/>
+	</c:if>
+	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
+
     <br/>
     <a href="#this" class="btn" id="write">글쓰기</a>
      
@@ -74,6 +81,14 @@
             comSubmit.addParam("IDX", obj.parent().find("#IDX").val());
             comSubmit.submit();
         }
+        
+        function fn_search(pageNo){
+            var comSubmit = new ComSubmit();
+            comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+            comSubmit.addParam("currentPageNo", pageNo);
+            comSubmit.submit();
+        }
+
     </script>
 </body>
 </html>

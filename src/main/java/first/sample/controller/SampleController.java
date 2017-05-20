@@ -1,7 +1,6 @@
 package first.sample.controller;
 
 import first.common.common.CommandMap;
-import first.common.controller.CommonController;
 import first.sample.service.SampleService;
 
 import java.util.Iterator;
@@ -12,6 +11,7 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +37,7 @@ public class SampleController {
 @Controller
 public class SampleController {
     Logger log = Logger.getLogger(this.getClass());
+	//Logger log = LogManager.getLogger(this.getClass());
      
     //서비스영역의 접근을 위한 선언. 어노테이션을 통해 필요한 bean을 수동으로 등록.
     @Resource(name="sampleService")
@@ -92,7 +93,6 @@ public class SampleController {
 
 	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
-		CommonController cc = new CommonController();
 		
 		ModelAndView mv = new ModelAndView("/sample/boardDetail");
 		
