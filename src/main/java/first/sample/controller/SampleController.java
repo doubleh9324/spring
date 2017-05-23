@@ -32,6 +32,8 @@ public class SampleController {
 }
 */
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+
 
 //객체 선언
 @Controller
@@ -43,19 +45,50 @@ public class SampleController {
     private SampleService sampleService;
      
     //요청 URL. 해당 주소를 호출하면 이 주소와 어노테이션이 매핑되어 해당 메소드가 실행.
-    @RequestMapping(value="/sample/openBoardList.do")
+    @RequestMapping(value="/sample/openBoardListEgov.do")
     //화면에 보여줄 jsp 파일 의미
-    public ModelAndView openSampleBoardList(Map<String,Object> commandMap) throws Exception{
+    public ModelAndView openBoardListEgov(CommandMap commandMap) throws Exception{
         ModelAndView mv = new ModelAndView("/sample/boardList");
+
         
         //목록을 저장할 List 선언. 다양한 내용을 map에 저장, map의 키 값 두가지.
         //실제 여러가지 비즈니스 로직은 service에서 작성. (조회수 증가, 게시글 읽기 등등)
-        List<Map<String,Object>> list = sampleService.selectBoardList(commandMap);
+        //Map<String,Object> resultMap = sampleService.selectBoardList(commandMap.getMap());
         //서비스 로직의 경과를 객체에 담아서 클라이언트로 전송.
-        mv.addObject("list", list);
+       // mv.addObject("list", list);
+        
+        Map<String,Object> resultMap = sampleService.selectBoardListEgov(commandMap.getMap());
+        
+        mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+        mv.addObject("list", resultMap.get("result"));
+
          
         return mv;
     }
+    
+    @RequestMapping(value="/sample/openBoardList.do")
+    public ModelAndView openBoardList(CommandMap commandMap) throws Exception{
+        ModelAndView mv = new ModelAndView("/sample/boardList");
+         
+        return mv;
+    }
+
+    @RequestMapping(value="/sample/selectBoardList.do")
+    public ModelAndView selectBoardList(CommandMap commandMap) throws Exception{
+        ModelAndView mv = new ModelAndView("jsonView");
+         
+        List<Map<String,Object>> list = sampleService.selectBoardList(commandMap.getMap());
+        mv.addObject("list", list);
+        if(list.size() > 0){
+            mv.addObject("TOTAL", list.get(0).get("TOTAL_COUNT"));
+        }
+        else{
+            mv.addObject("TOTAL", 0);
+        }
+         
+        return mv;
+    }
+
 
 
 	@RequestMapping(value="/sample/testMapArgumentResolver.do")

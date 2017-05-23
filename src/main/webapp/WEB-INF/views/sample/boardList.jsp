@@ -22,43 +22,26 @@
             </tr>
         </thead>
         <tbody>
-            <c:choose>
-                <c:when test="${fn:length(list) > 0}">
-                    <c:forEach items="${list }" var="row">
-                        <tr>
-                            <td>${row.IDX }</td>
-                            <td class="title">
-                                <a href="#this" name="title">${row.TITLE }</a>
-                                <input type="hidden" id="IDX" value="${row.IDX }">
-                            </td>
-                            <td>${row.HIT_CNT }</td>
-                            <td>${row.CREA_DTM }</td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <tr>
-                        <td colspan="4">조회된 결과가 없습니다.</td>
-                    </tr>
-                </c:otherwise>
-            </c:choose>
+             
         </tbody>
     </table>
+     
+    <div id="PAGE_NAVI"></div>
+    <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+     
     <br/>
     <a href="#this" class="btn" id="write">글쓰기</a>
      
     <%@ include file="/WEB-INF/include/include-body.jspf" %>
     <script type="text/javascript">
         $(document).ready(function(){
+            fn_selectBoardList(1);
+             
             $("#write").on("click", function(e){ //글쓰기 버튼
                 e.preventDefault();
                 fn_openBoardWrite();
             });
              
-            $("a[name='title']").on("click", function(e){ //제목
-                e.preventDefault();
-                fn_openBoardDetail($(this));
-            });
         });
          
          
@@ -68,13 +51,64 @@
             comSubmit.submit();
         }
          
-        function fn_openBoardDetail(obj){
+        function fn_openBoardDetail(idx){
             var comSubmit = new ComSubmit();
             comSubmit.setUrl("<c:url value='/sample/openBoardDetail.do' />");
-            comSubmit.addParam("IDX", obj.parent().find("#IDX").val());
+            window.alert("detail"+idx);
+            comSubmit.addParam("IDX", idx);
             comSubmit.submit();
+        }
+         
+        function fn_selectBoardList(pageNo){
+            var comAjax = new ComAjax();
+            comAjax.setUrl("<c:url value='/sample/selectBoardList.do' />");
+            comAjax.setCallback("fn_selectBoardListCallback");
+            comAjax.addParam("PAGE_INDEX",pageNo);
+            comAjax.addParam("PAGE_ROW", 15);
+            comAjax.ajax();
+        }
+         
+        function fn_selectBoardListCallback(data){
+            var total = data.TOTAL;
+            var body = $("table>tbody");
+            body.empty();
+            if(total == 0){
+                var str = "<tr>" +
+                                "<td colspan='4'>조회된 결과가 없습니다.</td>" +
+                            "</tr>";
+                body.append(str);
+            }
+            else{
+                var params = {
+                    divId : "PAGE_NAVI",
+                    pageIndex : "PAGE_INDEX",
+                    totalCount : total,
+                    eventName : "fn_selectBoardList"
+                };
+                gfn_renderPaging(params);
+                 
+                var str = "";
+                $.each(data.list, function(key, value){
+                    str += "<tr>" +
+                                "<td>" + value.IDX + "</td>" +
+                                "<td class='title'>" +
+                                    "<a href='#this' name='title'>" + value.TITLE + "</a>" +
+                                    "<input type='hidden' name='title' value=" + value.IDX + ">" +
+                                "</td>" +
+                                "<td>" + value.HIT_CNT + "</td>" +
+                                "<td>" + value.CREA_DTM + "</td>" +
+                            "</tr>";
+                });
+                body.append(str);
+                 
+                $("a[name='title']").on("click", function(e){ //제목
+                    e.preventDefault();
+                    fn_openBoardDetail($("input[name='title']").val());
+                });
+            }
         }
     </script>
 </body>
 </html>
+
 

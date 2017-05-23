@@ -28,8 +28,8 @@ public class SampleServiceImpl implements SampleService{
     private SampleDAO sampleDAO;
 	
 	@Override
-	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception {
-		return sampleDAO.selectBoardList(map);
+	public Map<String, Object> selectBoardListEgov(Map<String, Object> map) throws Exception {
+		return sampleDAO.selectBoardListEgov(map);
 	}
 
 	@Override
@@ -110,6 +110,11 @@ public class SampleServiceImpl implements SampleService{
 	@Override
 	public void deleteBoard(Map<String, Object> map) throws Exception {
 	    sampleDAO.deleteBoard(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception {
+		return sampleDAO.selectBoardList(map);
 	}
 
 

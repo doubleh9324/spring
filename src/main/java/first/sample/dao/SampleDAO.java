@@ -19,12 +19,17 @@ public class SampleDAO extends AbstractDAO{
 
 	//컴파일러의 경고 중 unchecked(검증되지 않은 연산자 관련 경고)를 억제
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) 
+	public Map<String, Object> selectBoardListEgov(Map<String, Object> map) 
 	throws Exception {
 		//selectList(쿼리이름, 실행하는데 필요한 변수)
-		return (List<Map<String, Object>>)selectList("sample.selectBoardList", map);
+		return (Map<String, Object>)selectPagingList("sample.selectBoardList", map);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception{
+	    return (List<Map<String, Object>>)selectPagingList("sample.selectBoardList", map);
+	}
+
 	public void insertBoard(Map<String, Object> map) throws Exception{
 	    insert("sample.insertBoard", map);
 	}

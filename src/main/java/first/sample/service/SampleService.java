@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 //비즈니스 로직의 수행을 위한 메소드 정의
 public interface SampleService {
 
-	List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception;
+	Map<String, Object> selectBoardListEgov(Map<String, Object> map) throws Exception;
 
 	void insertBoard(Map<String, Object> map,  HttpServletRequest request) throws Exception;
 
@@ -18,5 +18,6 @@ public interface SampleService {
 	
 	void deleteBoard(Map<String, Object> map) throws Exception;
 
+	List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception;
 
 }

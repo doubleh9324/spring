@@ -36,7 +36,9 @@
 	
 	<aop:aspectj-autoproxy/>
 	<bean id="loggerAspect" class="first.common.logger.LoggerAspect" />
-	
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
     
     
