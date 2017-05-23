@@ -101,7 +101,6 @@ public class FileUtils {
                 listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
                 
-                System.out.println(originalFileName + " / "+ boardIdx);
             } else {
             	/**빈 multifile을 받는경우(게시글에서 파일을 수정하지 않았을 경우)
             	 * 기존에 저장되어있던 내용인지 단순히 빈 파일인지 구분이 필요함
@@ -109,7 +108,7 @@ public class FileUtils {
             	//file태그의 name값을 가져옴
             	requestName = multipartFile.getName();
             	//기존에 저장된 파일의 경우 input 태그에 IDX_숫자로 name을 설정해두었음 그걸 만들기
-            	idx = "IDX" + requestName.substring(requestName.indexOf("_")+1);
+            	idx = "IDX_" + requestName.substring(requestName.indexOf("_")+1);
             	
             	//IDX_숫자 의 값이 존재한다면 기존에 있던 파일이므로 삭제 태그를 "N"로 변경
             	if(map.containsKey(idx) == true && map.get(idx) != null){
@@ -117,8 +116,6 @@ public class FileUtils {
             		listMap.put("IS_NEW", "N");
             		listMap.put("FILE_IDX", map.get(idx));
             		list.add(listMap);
-            		
-            		System.out.println(originalFileName + " / "+ idx);
             	}
             }
         }
