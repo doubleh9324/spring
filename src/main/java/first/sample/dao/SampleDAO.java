@@ -40,6 +40,7 @@ public class SampleDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) {
+		
 		return (Map<String, Object>)selectOne("sample.selectBoardDetail", map);
 	}
 

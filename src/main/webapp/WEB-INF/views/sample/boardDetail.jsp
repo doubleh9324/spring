@@ -16,7 +16,7 @@
         <tbody>
             <tr>
                 <th scope="row">글 번호</th>
-                <td>${map.TITLE }</td>
+                <td>${map.IDX}</td>
                 <th scope="row">조회수</th>
                 <td>${map.HIT_CNT }</td>
             </tr>
@@ -32,6 +32,9 @@
             </tr>
             <tr>
                 <td colspan="4">${map.CONTENTS }</td>
+            </tr>
+             <tr>
+            <td colspan="4"> ${ map.PAGE_INDEX }</td>
             </tr>
             <tr>
                 <th scope="row">첨부파일</th>
@@ -54,12 +57,13 @@
                 </c:choose>
                 </td>
             </tr>
+           
              
 
         </tbody>
     </table>
-     
-    <a href="#this" class="btn" id="list">목록으로</a>
+    <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" value="${map.PAGE_INDEX }"/>
+    <a href="javascript:history.back(-1)" class="btn" id="list">목록으로</a>
     <a href="#this" class="btn" id="update">수정하기</a>
 
 <!-- 
@@ -73,10 +77,14 @@ preventDefault() : default로 정의된 액션 금지
     <%@ include file="/WEB-INF/include/include-body.jspf" %>
     <script type="text/javascript">
         $(document).ready(function(){
+        	
+        	
+        	/*
             $("#list").on("click", function(e){ //목록으로 버튼
                 e.preventDefault();
                 fn_openBoardList();
             });
+        	*/
              
             $("#update").on("click", function(e){	//수정하기 버튼
                 e.preventDefault();
@@ -89,11 +97,14 @@ preventDefault() : default로 정의된 액션 금지
             });
         });
          
+        /*
         function fn_openBoardList(){
             var comSubmit = new ComSubmit();
-            comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+            var pageno = ($("#PAGE_INDEX").val());
+            comSubmit.setUrl("<c:url value='/sample/openBoardList.do#"+pageno+"' />");
             comSubmit.submit();
         }
+        */
          
         function fn_openBoardUpdate(){
             var idx = "${map.IDX}";

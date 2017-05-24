@@ -18,6 +18,8 @@ public interface SampleService {
 	
 	void deleteBoard(Map<String, Object> map) throws Exception;
 
+	List<Map<String, Object>> selectBoardListAjax(Map<String, Object> map) throws Exception;
+
 	List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception;
 
 }

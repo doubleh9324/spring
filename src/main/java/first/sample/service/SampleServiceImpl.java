@@ -113,9 +113,15 @@ public class SampleServiceImpl implements SampleService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectBoardListAjax(Map<String, Object> map) throws Exception {
 		return sampleDAO.selectBoardList(map);
 	}
+
+    @Override
+    public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception {
+        return sampleDAO.selectBoardList(map);
+    }
+
 
 
  
