@@ -152,6 +152,7 @@ function fn_selectBoardListCallback(data){
         $.each(data.list, function(key, value){
         	if(num < 0)
         		num = 0;
+        	var dtm = GetDateString(value.CREA_DTM);
             str += "<tr id='"+ (num + i)+"'>" +
                         "<td>" + value.IDX + "</td>" +
                         "<td class='title'>" +
@@ -159,7 +160,7 @@ function fn_selectBoardListCallback(data){
                             "<input type='hidden' name='title' value=" + value.IDX + ">" +
                         "</td>" +
                         "<td>" + value.HIT_CNT + "</td>" +
-                        "<td>" + value.CREA_DTM + "</td>" +
+                        "<td>" + dtm + "</td>" +
                     "</tr>";
                     i++;
         });
@@ -167,10 +168,33 @@ function fn_selectBoardListCallback(data){
         body.append(anchor);
         body.append(str);
     }
+    
+    
 }
         
 
+//날짜 형식 변환
+function GetDateString(jsonDate){
+	var year, month, day, hour, minute, second , returnValue  , date ,replaceStr
+	 
+    date = new Date(jsonDate);
 
+    year = date.getFullYear();
+    month = Pad(date.getMonth());
+    day = Pad(date.getDate());
+    hour = Pad(date.getHours());
+    minute = Pad(date.getMinutes());
+    second = Pad(date.getSeconds());
+
+    returnValue = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    return returnValue;
+}
+
+function Pad(num) {
+    num = "0" + num;
+    //slice(start, end) start<0이면 length+start
+    return num.slice(-2);
+}
 
 
 
