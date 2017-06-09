@@ -31,6 +31,8 @@
 
 	</repositories>
 	
+	
+	
 	<dependencies>
 	
 		<dependency>
@@ -44,8 +46,6 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.6.4</version>
 		</dependency>
-		
-
 	
 		<dependency>
 		    <groupId>egovframework.rte</groupId>

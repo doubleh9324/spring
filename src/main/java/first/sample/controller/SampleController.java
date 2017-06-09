@@ -153,7 +153,6 @@ public class SampleController {
 
 	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
-		CommonController cc = new CommonController();
 		
 		ModelAndView mv = new ModelAndView("/sample/boardDetail");
 		
@@ -181,7 +180,7 @@ public class SampleController {
 		
 		sampleService.updateBoard(commandMap.getMap(), request);
 		
-		mv.addObject("IDX", commandMap.get("IDX"));
+		mv.addObject("IDX_", commandMap.get("IDX"));
 		return mv;
 	}
 	
